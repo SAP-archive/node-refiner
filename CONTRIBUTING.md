@@ -36,7 +36,7 @@ To send us a pull request, please:
 GitHub provides additional documents on [forking a repository](https://help.github.com/articles/fork-a-repo/) and [creating a pull request](https://help.github.com/articles/creating-a-pull-request/).
 
 ## Code of Conduct
-Karpenter has adopted the [CNCF Community Code of Conduct](https://github.com/cncf/foundation/blob/master/code-of-conduct.md).
+Node Refiner has adopted the [CNCF Community Code of Conduct](https://github.com/cncf/foundation/blob/master/code-of-conduct.md).
 
 ## Licensing
-Karpenter is licensed under [Apache 2.0](../LICENSE).
+Node Refiner is licensed under [Apache 2.0](../LICENSE).
