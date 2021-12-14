@@ -1,0 +1,47 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+  app: node-harvester
+resources:
+  - namespace.yaml
+  - service.yaml
+  - crb.yaml
+  - deployment.yaml
+  - settings.yaml
+  - secret.yaml
+  - env/env.deploy.vars.yaml
+
+configurations:
+  - kustomizeconfig/rolebinding.yaml
+  - kustomizeconfig/namespace.yaml
+
+vars:
+  - fieldref:
+      fieldpath: data.NAMESPACE_ARGOCD
+    name: NAMESPACE_ARGOCD
+    objref:
+      apiVersion: v1
+      kind: ConfigMap
+      name: deployment-variables
+  - fieldref:
+      fieldpath: data.NAMESPACE_TESTS
+    name: NAMESPACE_TESTS
+    objref:
+      apiVersion: v1
+      kind: ConfigMap
+      name: deployment-variables
+  - fieldref:
+      fieldpath: data.NAMESPACE_NODE_HARVESTER
+    name: NAMESPACE_NODE_HARVESTER
+    objref:
+      apiVersion: v1
+      kind: ConfigMap
+      name: deployment-variables
+
+
+configMapGenerator:
+  - behavior: merge
+    envs:
+      - env/env.service.vars.properties
+    name: node-harvester-cm
+    namespace: $(NAMESPACE_NODE_HARVESTER)

@@ -1,0 +1,7 @@
+varReference:
+- path: metadata/namespace
+  kind: ""
+- path: metadata/name
+  kind: Namespace
+- path: spec/template/metadata/namespace
+  kind: SealedSecret

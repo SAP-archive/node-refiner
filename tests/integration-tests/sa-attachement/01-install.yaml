@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-harvester-test
+  labels:
+    app: node-harvester
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-harvester
+  template:
+    metadata:
+      labels:
+        app: node-harvester
+    spec:
+      imagePullSecrets:
+        - name: docker-registry
+      containers:
+        - name: application
+          image: mlf.docker.repositories.sapcdn.io/com.sap.aicore/node-harvester:0.1.0
+          imagePullPolicy: Always
+          ports:
+            - name: health
+              containerPort: 9102
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /alive
+              port: health
+          env:
+            - name: LISTENING_PORT
+              value: "8080"
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "256Mi"
+            limits:
+              cpu: "200m"
+              memory: "512Mi"

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-harvester
+  namespace: $(NAMESPACE_NODE_HARVESTER)
+  labels:
+    app: node-harvester
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-harvester
+  template:
+    metadata:
+      labels:
+        app: node-harvester
+    spec:
+      serviceAccountName: node-harvester-sa
+      imagePullSecrets:
+        - name: docker-registry
+      containers:
+        - name: node-harvester
+          image: default
+          imagePullPolicy: Always
+          ports:
+            - name: health
+              containerPort: 9102
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /alive
+              port: health
+          env:
+            - name: LISTENING_PORT
+              value: "8080"
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "256Mi"
+            limits:
+              cpu: "200m"
+              memory: "512Mi"
