@@ -2,7 +2,6 @@ apiVersion: kuttl.dev/v1beta1
 kind: TestSuite
 testDirs:
   - tests/integration-tests/
-manifestDirs:
-  - tests/manifests/
 artifactsDir: tests/artifacts/
 parallel: 4
+timeout: 120
