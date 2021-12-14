@@ -1,5 +1,5 @@
 # Build the node-harvester controller
-FROM public.int.repositories.cloud.sap/golang:1.15.7-alpine as builder
+FROM golang:alpine as builder
 
 WORKDIR /workspace
 # Copy the Go Modules manifests
