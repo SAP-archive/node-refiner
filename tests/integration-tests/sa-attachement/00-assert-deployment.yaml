@@ -5,6 +5,6 @@ timeout: 60
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: node-harvester-test
+  name: node-refiner-test
 status:
   readyReplicas: 1
