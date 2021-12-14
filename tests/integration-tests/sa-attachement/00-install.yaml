@@ -1,24 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: node-harvester-test
+  name: node-refiner-test
   labels:
-    app: node-harvester
+    app: node-refiner
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: node-harvester
+      app: node-refiner
   template:
     metadata:
       labels:
-        app: node-harvester
+        app: node-refiner
     spec:
-      imagePullSecrets:
-        - name: docker-registry
       containers:
         - name: application
-          image: mlf.docker.repositories.sapcdn.io/com.sap.aicore/node-harvester:0.1.0
+          image: alisoliman/node-refiner:latest
           imagePullPolicy: Always
           ports:
             - name: health

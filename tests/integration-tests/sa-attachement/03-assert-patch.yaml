@@ -1,10 +1,11 @@
 apiVersion: kuttl.dev/v1beta1
 kind: TestAssert
-timeout: 60
+timeout: 120
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: node-harvester-test
+  name: node-refiner-test
 status:
+  updatedReplicas: 1
   readyReplicas: 1

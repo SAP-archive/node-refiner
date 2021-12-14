@@ -1,4 +1,4 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: node-harvester-sa
+  name: node-refiner-sa
