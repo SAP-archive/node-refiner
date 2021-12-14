@@ -102,8 +102,9 @@ jobs:
           export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" >> ~/.bashrc && \
           source ~/.bashrc && \
           kubectl krew install kuttl && \
-          cd /home/runner/work/github-actions-go-application/github-actions-go-application && \
+          cd /home/runner/work/node-refiner/node-refiner && \
           kubectl kuttl test --start-kind --artifacts-dir ${{ github.workspace }}/tests/artifacts
+        shell: bash
       - name: Archive KUTTL Kind Logs
         if: always()
         uses: actions/upload-artifact@v2
