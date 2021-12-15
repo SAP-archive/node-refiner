@@ -30,7 +30,8 @@ jobs:
           curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
       - name: Create K3D Cluster
         run: |
-          k3d cluster create k3d-testing --servers 1 --agents 3 --kubeconfig-update-default --k3s-server-arg --cluster-init
+          k3d cluster create k3d-testing --servers 1 --agents 3 --kubeconfig-update-default
+        shell: bash
       - name: Install krew & KUTTL
         run: |
           set -x; cd "$(mktemp -d)" && \
