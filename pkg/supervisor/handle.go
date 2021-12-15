@@ -2,9 +2,10 @@ package supervisor
 
 import (
 	"fmt"
-	"go.uber.org/zap"
 	"net/http"
 	"time"
+
+	"go.uber.org/zap"
 )
 
 const (
@@ -30,9 +31,11 @@ func (h *Handler) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 	if !Healthy || Heartbeat.Add(h.MaxLoopTime).Before(time.Now()) {
 		zap.S().Errorw("liveness failed", "healthy", Healthy, "heartbeat", Heartbeat, "maxLoopTime", h.MaxLoopTime)
 		res.WriteHeader(http.StatusServiceUnavailable)
-		res.Write(errMsg(Heartbeat, h.MaxLoopTime))
+		_, err := res.Write(errMsg(Heartbeat, h.MaxLoopTime))
+		Check(err)
 	}
-	res.Write([]byte("OK"))
+	_, err := res.Write([]byte("OK"))
+	Check(err)
 }
 
 func errMsg(hearbeat time.Time, maxLoopTime time.Duration) []byte {
