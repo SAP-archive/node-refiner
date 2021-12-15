@@ -84,9 +84,6 @@ jobs:
           chmod +x kubectl && \
           mv kubectl /usr/local/bin/ \
           && echo "kubectl installed"
-      - name: Install K3D
-        run: |
-          curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
       - name: Install Kind
         run: |
           curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.8.1/kind-linux-amd64 && chmod +x ./kind && sudo mv ./kind /usr/local/bin/kind
