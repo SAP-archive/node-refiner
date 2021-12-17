@@ -2,15 +2,16 @@ package common
 
 import (
 	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
+
 	"go.uber.org/zap"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
-	"os"
-	"os/signal"
-	"syscall"
 )
 
 // GetClient returns a k8s clientset to the request from inside of cluster
@@ -70,7 +71,7 @@ func FormatValue(resourceType string, quantity resource.Quantity) string {
 
 // CheckForTaints returns whether the node is tainted or not
 func CheckForTaints(node *corev1.Node) bool {
-	if len(node.Spec.Taints) > 0 || node.Spec.Unschedulable == true {
+	if len(node.Spec.Taints) > 0 || node.Spec.Unschedulable {
 		return true
 	}
 	return false
@@ -88,5 +89,3 @@ func CreateSignalHandler() (stopCh <-chan struct{}) {
 	}()
 	return stop
 }
-
-
