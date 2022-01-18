@@ -13,5 +13,5 @@ jobs:
         # disallowed_prefixes: 'feat/,hotfix' # title should not start with the given prefix
         prefix_case_sensitive: false # title prefix are case insensitive
         min_length: 5 # Min length of the title
-        max_length: 50 # Max length of the title
+        max_length: 100 # Max length of the title
         github_token: ${{ secrets.GITHUB_TOKEN }} # Default: ${{ github.token }}
