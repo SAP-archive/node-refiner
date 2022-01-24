@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: application
-          image: alisoliman/node-refiner:$DOCKER_TAG
+          image: alisoliman/node-refiner:pr-12
           imagePullPolicy: Always
           ports:
             - name: health

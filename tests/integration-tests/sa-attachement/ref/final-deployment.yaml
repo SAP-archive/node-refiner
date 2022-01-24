@@ -17,7 +17,7 @@ spec:
       serviceAccountName: node-refiner-sa
       containers:
         - name: application
-          image: alisoliman/node-refiner:latest
+          image: alisoliman/node-refiner:pr-12
           imagePullPolicy: Always
           ports:
             - name: health
@@ -37,3 +37,9 @@ spec:
             limits:
               cpu: "200m"
               memory: "512Mi"
+
+
+export IMAGE_TAG=pr-12
+for i in 'tests/installation/00-install.yaml' 'tests/installation/00-install.yaml' 'tests/installation/00-install.yaml'; do
+    envsubst < 
+done
