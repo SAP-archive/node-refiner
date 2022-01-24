@@ -98,7 +98,7 @@ jobs:
         run: |
           curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.8.1/kind-linux-amd64 && chmod +x ./kind && sudo mv ./kind /usr/local/bin/kind
       - name: Prepare KUTTL Tests
-      - uses: microsoft/variable-substitution@v1 
+        uses: microsoft/variable-substitution@v1 
         with:
             files: 'tests/integration-tests/installation/00-install.yaml'
         env:
