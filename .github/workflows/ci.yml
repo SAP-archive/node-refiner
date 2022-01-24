@@ -97,21 +97,23 @@ jobs:
       - name: Install Kind
         run: |
           curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.8.1/kind-linux-amd64 && chmod +x ./kind && sudo mv ./kind /usr/local/bin/kind
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ secrets.DOCKER_HUB_USERNAME }}/node-refiner
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
       - name: Prepare KUTTL Tests
         run: |
-          export IMAGE_TAG=pr-12
+          export IMAGE_TAG=${{ steps.meta.outputs.tags }}
           for i in 'tests/integration-tests/installation/00-install.yaml' 'tests/integration-tests/sa-attachement/ref/final-deployment.yaml' 'tests/integration-tests/sa-attachement/00-install.yaml' ; do
             envsubst < $i > tmp
             mv tmp $i
           done
-        
-      # - name: Prepare KUTTL Tests
-      #   uses: danielr1996/envsubst-action@1.1.0
-      #   env:
-      #     IMAGE_TAG: pr-12
-      #   with:
-      #     input: tests/integration-tests/installation/00-install.yaml
-      #     output: tests/integration-tests/installation/00-install.yaml
       - name: Install krew & KUTTL
         run: |
           set -x; cd "$(mktemp -d)" && \
