@@ -81,6 +81,12 @@ jobs:
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
+  prepare-integration-tests:
+    name: Prepare Integration Tests
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - 
           
   run-integration-tests:
     name: Run Integration Tests
@@ -98,9 +104,15 @@ jobs:
       - name: Install Kind
         run: |
           curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.8.1/kind-linux-amd64 && chmod +x ./kind && sudo mv ./kind /usr/local/bin/kind
+      - name: Prepare KUTTL Tests
+        uses: danielr1996/envsubst-action@1.1.0
+        env:
+          IMAGE_TAG: pr-12
+        with:
+          input: tests/integration-tests/installation/00-install.yaml
+          output: tests/integration-tests/installation/00-install.yaml
       - name: Install krew & KUTTL
         run: |
-          export DOCKER_TAG="${{ steps.vars.outputs.docker_tag }}" >> ~/.bashrc && \
           set -x; cd "$(mktemp -d)" && \
           OS="$(uname | tr '[:upper:]' '[:lower:]')" && \
           ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" && \
