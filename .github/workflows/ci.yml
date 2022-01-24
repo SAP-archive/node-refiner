@@ -80,13 +80,6 @@ jobs:
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
-
-  prepare-integration-tests:
-    name: Prepare Integration Tests
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      - 
           
   run-integration-tests:
     name: Run Integration Tests
