@@ -98,12 +98,18 @@ jobs:
         run: |
           curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.8.1/kind-linux-amd64 && chmod +x ./kind && sudo mv ./kind /usr/local/bin/kind
       - name: Prepare KUTTL Tests
-        uses: danielr1996/envsubst-action@1.1.0
-        env:
-          IMAGE_TAG: pr-12
+      - uses: microsoft/variable-substitution@v1 
         with:
-          input: tests/integration-tests/installation/00-install.yaml
-          output: tests/integration-tests/installation/00-install.yaml
+            files: 'tests/integration-tests/installation/00-install.yaml'
+        env:
+            image: alisoliman/node-refiner:pr-12
+      # - name: Prepare KUTTL Tests
+      #   uses: danielr1996/envsubst-action@1.1.0
+      #   env:
+      #     IMAGE_TAG: pr-12
+      #   with:
+      #     input: tests/integration-tests/installation/00-install.yaml
+      #     output: tests/integration-tests/installation/00-install.yaml
       - name: Install krew & KUTTL
         run: |
           set -x; cd "$(mktemp -d)" && \
