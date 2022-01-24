@@ -102,7 +102,7 @@ jobs:
         with:
             files: 'tests/integration-tests/installation/00-install.yaml'
         env:
-            image: alisoliman/node-refiner:pr-12
+            spec.template.spec.image: alisoliman/node-refiner:pr-12
       # - name: Prepare KUTTL Tests
       #   uses: danielr1996/envsubst-action@1.1.0
       #   env:
