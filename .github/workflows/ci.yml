@@ -109,6 +109,7 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
       - name: Prepare KUTTL Tests
         run: |
+          echo "${{steps.meta.outputs.tags}}"
           export IMAGE_TAG=${{ steps.meta.outputs.tags }}
           for i in 'tests/integration-tests/installation/00-install.yaml' 'tests/integration-tests/sa-attachement/ref/final-deployment.yaml' 'tests/integration-tests/sa-attachement/00-install.yaml' ; do
             envsubst < $i > tmp
