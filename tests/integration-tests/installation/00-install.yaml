@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: application
-          image: ${IMAGED_TAGGED}
+          image: ${IMAGE_TAGGED}
           imagePullPolicy: Always
           ports:
             - name: health
