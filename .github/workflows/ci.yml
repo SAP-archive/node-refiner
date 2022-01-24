@@ -100,7 +100,7 @@ jobs:
       - name: Prepare KUTTL Tests
         uses: microsoft/variable-substitution@v1 
         with:
-            files: 'tests/integration-tests/installation/00-install.yaml'
+            files: '${{ github.workspace }}/tests/integration-tests/installation/00-install.yaml'
         env:
             spec.template.spec.image: alisoliman/node-refiner:pr-12
       # - name: Prepare KUTTL Tests
