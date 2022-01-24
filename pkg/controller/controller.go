@@ -2,7 +2,6 @@ package controller
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.wdf.sap.corp/ICN-ML/aicore/operators/node-harvester/pkg/common"
@@ -165,8 +164,8 @@ func (c *WorkloadsController) RunCalculationLoop() {
 		} else {
 			zap.S().Infow("Potential node to drain",
 				"node", potentialNodeDrain.Node.Name, "number of pods", len(potentialNodeDrain.Pods),
-				"CPU Utilization", fmt.Sprintf("%.2f%%", potentialNodeDrain.Utilization.PercentageCPU),
-				"RAM Utilization", fmt.Sprintf("%.2f%%", potentialNodeDrain.Utilization.PercentageRAM))
+				"CPU Utilization", common.FormatPercentage(potentialNodeDrain.Utilization.PercentageCPU),
+				"RAM Utilization", common.FormatPercentage(potentialNodeDrain.Utilization.PercentageRAM))
 			cluster.CalculateExcessNode(potentialNodeDrain)
 			c.d.AttemptDrain(potentialNodeDrain.Node.Name, &cluster)
 		}
@@ -188,8 +187,8 @@ func logCluster(clusterManifest *types.ClusterManifest) {
 		"Number of non tainted nodes", clusterManifest.NumberOfNonTaintedNodes,
 		"Number of pods", clusterManifest.NumberOfPods,
 		"Number of excess nodes", clusterManifest.ExcessNodes,
-		"CPU Utilization", fmt.Sprintf("%.2f%%", clusterManifest.Utilization.PercentageCPU),
-		"RAM Utilization", fmt.Sprintf("%.2f%%", clusterManifest.Utilization.PercentageRAM),
+		"CPU Utilization", common.FormatPercentage(clusterManifest.Utilization.PercentageCPU),
+		"RAM Utilization", common.FormatPercentage(clusterManifest.Utilization.PercentageRAM),
 	)
 }
 
