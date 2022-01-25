@@ -4,10 +4,10 @@ import (
 	"context"
 	"time"
 
-	"github.wdf.sap.corp/ICN-ML/aicore/operators/node-harvester/pkg/common"
-	"github.wdf.sap.corp/ICN-ML/aicore/operators/node-harvester/pkg/drainer"
-	"github.wdf.sap.corp/ICN-ML/aicore/operators/node-harvester/pkg/supervisor"
-	"github.wdf.sap.corp/ICN-ML/aicore/operators/node-harvester/pkg/types"
+	"github.com/SAP/node-refiner/pkg/common"
+	"github.com/SAP/node-refiner/pkg/drainer"
+	"github.com/SAP/node-refiner/pkg/supervisor"
+	"github.com/SAP/node-refiner/pkg/types"
 
 	"go.uber.org/zap"
 	corev1 "k8s.io/api/core/v1"

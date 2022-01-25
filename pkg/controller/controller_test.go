@@ -4,8 +4,8 @@ import (
 	"testing"
 	"time"
 
-	"github.wdf.sap.corp/ICN-ML/aicore/operators/node-harvester/pkg/drainer"
-	"github.wdf.sap.corp/ICN-ML/aicore/operators/node-harvester/pkg/types"
+	"github.com/SAP/node-refiner/pkg/drainer"
+	"github.com/SAP/node-refiner/pkg/types"
 
 	"github.com/google/go-cmp/cmp"
 	v1 "k8s.io/api/core/v1"

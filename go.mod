@@ -1,4 +1,4 @@
-module github.wdf.sap.corp/ICN-ML/aicore/operators/node-harvester
+module github.com/SAP/node-refiner
 
 go 1.15
 

@@ -1,9 +1,9 @@
 package supervisor
 
 import (
+	"github.com/SAP/node-refiner/pkg/types"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
-	"github.wdf.sap.corp/ICN-ML/aicore/operators/node-harvester/pkg/types"
 )
 
 // ClusterMetrics is struct of prometheus metrics to be exported
