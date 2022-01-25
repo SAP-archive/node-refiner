@@ -50,7 +50,7 @@ func GetClientOutOfCluster() (kubernetes.Interface, error) {
 
 	clientset, err := kubernetes.NewForConfig(config)
 	if err != nil {
-		zap.S().Fatalf("Can not get kubernetes config: %v", err)
+		zap.S().Fatalf("Can not create kubernetes client: %v", err)
 		return nil, err
 	}
 
@@ -67,6 +67,11 @@ func FormatValue(resourceType string, quantity resource.Quantity) string {
 	default:
 		return "Unknown Quantity"
 	}
+}
+
+// FormatPercentage reusable styling for printing percentages
+func FormatPercentage(value float64) string {
+	return fmt.Sprintf("%.2f%%", value)
 }
 
 // CheckForTaints returns whether the node is tainted or not

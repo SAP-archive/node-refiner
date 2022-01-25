@@ -280,6 +280,7 @@ func (d *APICordonDrainer) Drain(nodeName string) error {
 
 func (d *APICordonDrainer) evict(p *v1.Pod, abort <-chan struct{}, e chan<- error) {
 	gracePeriod := int64(d.maxGracePeriod.Seconds())
+	zap.S().Infow("Evicting Pod", "pod", p.Name, "namespace", p.Namespace)
 	if p.Spec.TerminationGracePeriodSeconds != nil && *p.Spec.TerminationGracePeriodSeconds < gracePeriod {
 		gracePeriod = *p.Spec.TerminationGracePeriodSeconds
 	}
@@ -294,7 +295,6 @@ func (d *APICordonDrainer) evict(p *v1.Pod, abort <-chan struct{}, e chan<- erro
 					ObjectMeta:    metav1.ObjectMeta{Namespace: p.Namespace, Name: p.Name},
 					DeleteOptions: &metav1.DeleteOptions{GracePeriodSeconds: &gracePeriod},
 				})
-			//err := d.c.CoreV1().Pods(p.GetNamespace()).Delete(d.getContext(), p.Name, metav1.DeleteOptions{})
 			switch {
 			// The eviction API returns 429 Too Many Requests if a pod
 			// cannot currently be evicted, for example due to a pod

@@ -17,7 +17,7 @@ spec:
       serviceAccountName: node-refiner-sa
       containers:
         - name: application
-          image: alisoliman/node-refiner:latest
+          image: alisoliman/node-refiner:${IMAGE_TAGGED}
           imagePullPolicy: Always
           ports:
             - name: health

@@ -10,7 +10,7 @@ import (
 func main() {
 	log.Printf("Starting Node Refiner")
 
-	logger, _ := zap.NewProduction()
+	logger, _ := zap.NewDevelopment()
 
 	defer func() {
 		err := logger.Sync()

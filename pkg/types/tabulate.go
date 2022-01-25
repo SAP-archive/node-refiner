@@ -2,9 +2,10 @@ package types
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/jedib0t/go-pretty/table"
 	"github.wdf.sap.corp/ICN-ML/aicore/operators/node-harvester/pkg/common"
-	"os"
 )
 
 // TabulateNodeMap Print the Nodes Metrics in a Table
@@ -25,7 +26,7 @@ func TabulateNodeMap(nodesMap map[string]NodeManifest) {
 			len(nodeManifest.Pods),
 			common.FormatValue("CPU", nodeManifest.TotalPodsRequests.ReqCPU), common.FormatValue("RAM", nodeManifest.TotalPodsRequests.ReqRAM),
 			common.FormatValue("CPU", nodeManifest.Metrics.AllocCPU), common.FormatValue("RAM", nodeManifest.Metrics.AllocRAM),
-			fmt.Sprintf("%.2f%%", nodeManifest.Utilization.PercentageCPU), fmt.Sprintf("%.2f%%", nodeManifest.Utilization.PercentageRAM),
+			common.FormatPercentage(nodeManifest.Utilization.PercentageCPU), common.FormatPercentage(nodeManifest.Utilization.PercentageRAM),
 			fmt.Sprintf("%.2f", nodeManifest.Utilization.Score)})
 	}
 	t.Render()
@@ -62,11 +63,11 @@ func TabulateCluster(clusterManifest *ClusterManifest) {
 	t.AppendRow(table.Row{"CPU",
 		common.FormatValue("CPU", clusterManifest.TotalPodsMetrics.ReqCPU),
 		common.FormatValue("CPU", clusterManifest.TotalNodeMetrics.AllocCPU),
-		fmt.Sprintf("%.2f%%", clusterManifest.Utilization.PercentageCPU)})
+		common.FormatPercentage(clusterManifest.Utilization.PercentageCPU)})
 	t.AppendRow(table.Row{"RAM",
 		common.FormatValue("RAM", clusterManifest.TotalPodsMetrics.ReqRAM),
 		common.FormatValue("RAM", clusterManifest.TotalNodeMetrics.AllocRAM),
-		fmt.Sprintf("%.2f%%", clusterManifest.Utilization.PercentageRAM)})
+		common.FormatPercentage(clusterManifest.Utilization.PercentageRAM)})
 
 	t.Render()
 }
