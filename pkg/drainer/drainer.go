@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.wdf.sap.corp/ICN-ML/aicore/operators/node-harvester/pkg/supervisor"
-	internaltypes "github.wdf.sap.corp/ICN-ML/aicore/operators/node-harvester/pkg/types"
+	"github.com/SAP/node-refiner/pkg/supervisor"
+	internaltypes "github.com/SAP/node-refiner/pkg/types"
 
 	"github.com/pkg/errors"
 

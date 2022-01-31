@@ -38,5 +38,9 @@ GitHub provides additional documents on [forking a repository](https://help.gith
 ## Code of Conduct
 Node Refiner has adopted the [CNCF Community Code of Conduct](https://github.com/cncf/foundation/blob/master/code-of-conduct.md).
 
+## Developer Certificate of Origin (DCO)
+
+Due to legal reasons, contributors will be asked to accept a DCO when they create the first pull request to this project. This happens in an automated fashion during the submission process. SAP uses [the standard DCO text of the Linux Foundation](https://developercertificate.org/).
+
 ## Licensing
 Node Refiner is licensed under [Apache 2.0](../LICENSE).

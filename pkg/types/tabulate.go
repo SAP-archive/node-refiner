@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"os"
 
+
+	"github.com/SAP/node-refiner/pkg/common"
 	"github.com/jedib0t/go-pretty/table"
-	"github.wdf.sap.corp/ICN-ML/aicore/operators/node-harvester/pkg/common"
 )
 
 // TabulateNodeMap Print the Nodes Metrics in a Table

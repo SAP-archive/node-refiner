@@ -1,7 +1,7 @@
 package types
 
 import (
-	"github.wdf.sap.corp/ICN-ML/aicore/operators/node-harvester/pkg/common"
+	"github.com/SAP/node-refiner/pkg/common"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 )

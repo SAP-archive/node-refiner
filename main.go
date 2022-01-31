@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.wdf.sap.corp/ICN-ML/aicore/operators/node-harvester/pkg/controller"
+	"github.com/SAP/node-refiner/pkg/controller"
 	"go.uber.org/zap"
 )
 

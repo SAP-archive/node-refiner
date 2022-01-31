@@ -1,11 +1,10 @@
 package controller
 
 import (
-	"github.wdf.sap.corp/ICN-ML/aicore/operators/node-harvester/pkg/types"
+	"github.com/SAP/node-refiner/pkg/types"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/tools/cache"
 )
-
 
 // AddPodEventHandler subscribes and routes the different events of interest to the pods informer
 func (c *WorkloadsController) AddPodEventHandler() {
