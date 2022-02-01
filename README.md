@@ -1,5 +1,7 @@
 # **Node Refiner Operator**
 
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP/node-refiner)](https://api.reuse.software/info/github.com/SAP/node-refiner)
+
 ## Description
 In long-running clusters (production clusters) we often can improve the efficiency of resource usage by rescheduling workloads from under-utilized nodes.
 
