@@ -27,6 +27,10 @@ type Handler struct {
 	MaxLoopTime time.Duration
 }
 
+func UpdateHeartbeat() {
+	Heartbeat = time.Now()
+}
+
 func (h *Handler) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 	if !Healthy || Heartbeat.Add(h.MaxLoopTime).Before(time.Now()) {
 		zap.S().Errorw("liveness failed", "healthy", Healthy, "heartbeat", Heartbeat, "maxLoopTime", h.MaxLoopTime)

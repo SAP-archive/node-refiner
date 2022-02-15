@@ -153,6 +153,7 @@ func (c *WorkloadsController) calculateClusterUtilization() {
 // RunCalculationLoop Run the cluster calculation loop every minute
 func (c *WorkloadsController) RunCalculationLoop() {
 	for {
+		supervisor.UpdateHeartbeat()
 		c.clearPodsList()
 		c.addPodsToNodes()
 		c.calculateTotalPodsMetrics()
