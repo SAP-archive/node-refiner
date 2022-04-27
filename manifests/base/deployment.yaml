@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: node-harvester
-  namespace: $(NAMESPACE_NODE_HARVESTER)
+  name: node-refiner
+  namespace: $(NAMESPACE_NODE_REFINER)
   labels:
-    app: node-harvester
+    app: node-refiner
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: node-harvester
+      app: node-refiner
   template:
     metadata:
       labels:
-        app: node-harvester
+        app: node-refiner
     spec:
-      serviceAccountName: node-harvester-sa
+      serviceAccountName: node-refiner-sa
       imagePullSecrets:
-        - name: docker-registry
+        - name: nr-docker-registry
       containers:
-        - name: node-harvester
-          image: default
+        - name: node-refiner
+          image: ghcr.io/sap/node-refiner:0.0.7
           imagePullPolicy: Always
           ports:
             - name: health

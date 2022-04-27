@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 commonLabels:
-  app: node-harvester
+  app: node-refiner
 resources:
   - namespace.yaml
   - service.yaml
@@ -31,8 +31,8 @@ vars:
       kind: ConfigMap
       name: deployment-variables
   - fieldref:
-      fieldpath: data.NAMESPACE_NODE_HARVESTER
-    name: NAMESPACE_NODE_HARVESTER
+      fieldpath: data.NAMESPACE_NODE_REFINER
+    name: NAMESPACE_NODE_REFINER
     objref:
       apiVersion: v1
       kind: ConfigMap
@@ -43,5 +43,5 @@ configMapGenerator:
   - behavior: merge
     envs:
       - env/env.service.vars.properties
-    name: node-harvester-cm
-    namespace: $(NAMESPACE_NODE_HARVESTER)
+    name: node-refiner-cm
+    namespace: $(NAMESPACE_NODE_REFINER)

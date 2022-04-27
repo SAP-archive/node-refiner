@@ -1,4 +1,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: $(NAMESPACE_NODE_HARVESTER)
+  name: $(NAMESPACE_NODE_REFINER)
