@@ -173,6 +173,7 @@ func (c *WorkloadsController) RunCalculationLoop() {
 		logCluster(&cluster)
 		c.s.ClusterMetrics.PublishClusterMetrics(&cluster)
 		c.s.ClusterMetrics.PublishNodeUnschedulable(c.nodesMap)
+		types.LogNodeMap(c.nodesMap)
 		//types.TabulateNodeMap(c.nodesMap)
 		//types.TabulatePodsMap(c.podsMap)
 		//types.TabulateCluster(&cluster)
