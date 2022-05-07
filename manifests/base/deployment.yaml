@@ -16,11 +16,9 @@ spec:
         app: node-refiner
     spec:
       serviceAccountName: node-refiner-sa
-      imagePullSecrets:
-        - name: nr-docker-registry
       containers:
         - name: node-refiner
-          image: ghcr.io/sap/node-refiner:0.0.7
+          image: default
           imagePullPolicy: Always
           ports:
             - name: health

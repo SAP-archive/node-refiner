@@ -8,7 +8,6 @@ resources:
   - crb.yaml
   - deployment.yaml
   - settings.yaml
-  - secret.yaml
   - env/env.deploy.vars.yaml
 
 configurations:
@@ -17,20 +16,6 @@ configurations:
 
 vars:
   - fieldref:
-      fieldpath: data.NAMESPACE_ARGOCD
-    name: NAMESPACE_ARGOCD
-    objref:
-      apiVersion: v1
-      kind: ConfigMap
-      name: deployment-variables
-  - fieldref:
-      fieldpath: data.NAMESPACE_TESTS
-    name: NAMESPACE_TESTS
-    objref:
-      apiVersion: v1
-      kind: ConfigMap
-      name: deployment-variables
-  - fieldref:
       fieldpath: data.NAMESPACE_NODE_REFINER
     name: NAMESPACE_NODE_REFINER
     objref:
@@ -38,10 +23,7 @@ vars:
       kind: ConfigMap
       name: deployment-variables
 
-
-configMapGenerator:
-  - behavior: merge
-    envs:
-      - env/env.service.vars.properties
-    name: node-refiner-cm
-    namespace: $(NAMESPACE_NODE_REFINER)
+images:
+  - name: default
+    newName: ghcr.io/sap/node-refiner
+    newTag: 0.0.7
