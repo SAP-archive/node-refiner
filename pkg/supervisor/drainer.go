@@ -18,15 +18,15 @@ func InitDrainerMetrics(prefix string) *DrainerMetrics {
 	dm := DrainerMetrics{
 		NodesCordoned: promauto.NewCounter(prometheus.CounterOpts{
 			Name: prefix + "_nodes_cordoned",
-			Help: "Number of nodes that were cordoned by node harvester",
+			Help: "Number of nodes that were cordoned by node refiner",
 		}),
 		NodesDrained: promauto.NewCounter(prometheus.CounterOpts{
 			Name: prefix + "_nodes_drained",
-			Help: "Number of nodes that were drained by node harvester",
+			Help: "Number of nodes that were drained by node refiner",
 		}),
 		NodesUncordoned: promauto.NewCounter(prometheus.CounterOpts{
 			Name: prefix + "_nodes_uncordoned",
-			Help: "Number of nodes that were uncordoned by node harvester",
+			Help: "Number of nodes that were uncordoned by node refiner",
 		}),
 	}
 	return &dm
