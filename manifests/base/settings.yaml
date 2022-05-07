@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: node-harvester-cm
-  namespace: $(NAMESPACE_NODE_HARVESTER)
+  name: node-refiner-cm
+  namespace: $(NAMESPACE_NODE_REFINER)
 data:
   drainer_enabled: "true"
   time_gap: "5"
