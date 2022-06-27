@@ -4,7 +4,7 @@ metadata:
   name: node-refiner-cm
   namespace: $(NAMESPACE_NODE_REFINER)
 data:
-  drainer_enabled: "true"
+  drainer_enabled: "false"
   time_gap: "5"
   time_since_last_addition: "60"
   minimum_nodes: "3"
