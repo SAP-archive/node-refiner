@@ -57,7 +57,7 @@ func NewController() (*WorkloadsController, error) {
 		}
 	}
 
-	s := supervisor.InitSupervisor("node_harvester")
+	s := supervisor.InitSupervisor("node_refiner")
 	d := drainer.NewAPICordonDrainer(kubeClient, s)
 
 	go s.StartSupervising()
@@ -95,7 +95,6 @@ func (c *WorkloadsController) CreateRunInformers() {
 	)
 
 	c.podsInformer = podsInformer
-	// c.podsInformer = factory.Core().V1().Pods().Informer()
 	c.cmInformer = factory.Core().V1().ConfigMaps().Informer()
 	c.nodesInformer = factory.Core().V1().Nodes().Informer()
 
@@ -127,7 +126,7 @@ func (c *WorkloadsController) CreateRunInformers() {
 	c.AddConfigMapEventHandler()
 
 	<-stopCh
-	zap.S().Info("Stopping Node Harvester")
+	zap.S().Info("Stopping Node Refiner")
 }
 
 func (c *WorkloadsController) calculateTotalPodsMetrics() {
@@ -174,6 +173,7 @@ func (c *WorkloadsController) RunCalculationLoop() {
 		logCluster(&cluster)
 		c.s.ClusterMetrics.PublishClusterMetrics(&cluster)
 		c.s.ClusterMetrics.PublishNodeUnschedulable(c.nodesMap)
+		types.LogNodeMap(c.nodesMap)
 		//types.TabulateNodeMap(c.nodesMap)
 		//types.TabulatePodsMap(c.podsMap)
 		//types.TabulateCluster(&cluster)

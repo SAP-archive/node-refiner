@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"os"
 
-
 	"github.com/SAP/node-refiner/pkg/common"
 	"github.com/jedib0t/go-pretty/table"
+	"go.uber.org/zap"
+	"k8s.io/apimachinery/pkg/api/resource"
 )
 
 // TabulateNodeMap Print the Nodes Metrics in a Table
@@ -31,6 +32,25 @@ func TabulateNodeMap(nodesMap map[string]NodeManifest) {
 			fmt.Sprintf("%.2f", nodeManifest.Utilization.Score)})
 	}
 	t.Render()
+}
+
+func LogNodeMap(nodesMap map[string]NodeManifest) {
+	logValues := map[string]map[string]int64{}
+
+	if len(nodesMap) != 0 {
+		for nodeName, nodeManifest := range nodesMap {
+			logValues[nodeName] = map[string]int64{
+				"CPU Pods Requests":    nodeManifest.TotalPodsRequests.ReqCPU.ScaledValue(resource.Milli),
+				"Memory Pods Requests": nodeManifest.TotalPodsRequests.ReqRAM.ScaledValue(resource.Mega),
+				"CPU Allocatable":      nodeManifest.Metrics.AllocCPU.ScaledValue(resource.Milli),
+				"Memory Allocatable":   nodeManifest.Metrics.AllocRAM.ScaledValue(resource.Mega),
+				"% CPU":                int64(nodeManifest.Utilization.PercentageCPU),
+				"% Memory":             int64(nodeManifest.Utilization.PercentageRAM),
+				"Score":                int64(nodeManifest.Utilization.Score),
+			}
+		}
+		zap.S().Infow("logging node metrics", "metrics", logValues)
+	}
 }
 
 // TabulatePodsMap Print pod analytics in a tabular form
