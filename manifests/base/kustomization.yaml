@@ -26,4 +26,4 @@ vars:
 images:
   - name: default
     newName: ghcr.io/sap/node-refiner
-    newTag: 0.0.7
+    newTag: pr-21

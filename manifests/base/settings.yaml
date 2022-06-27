@@ -6,7 +6,7 @@ metadata:
 data:
   drainer_enabled: "true"
   time_gap: "5"
-  time_since_last_addition: "30"
+  time_since_last_addition: "60"
   minimum_nodes: "3"
   minimum_non_tainted_nodes: "3"
   excess_nodes_threshold: "2"
