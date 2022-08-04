@@ -16,11 +16,13 @@ func (c *WorkloadsController) AddConfigMapEventHandler() {
 		})
 }
 
-// presence of a new kubernetes node in the cluster
+// addConfigMap notifies informer that a config map is added
+// checks if the configMap added is for the controller settings
+// updates settings if found
 func (c *WorkloadsController) addConfigMap(obj interface{}) {
 	cm := obj.(*corev1.ConfigMap)
 
-	if cm.Name == "node-harvester-cm" {
+	if cm.Name == "node-refiner-cm" {
 		zap.S().Info("ConfigMap add event, initiating an update to the drainer settings")
 		err := c.d.UpdateSettings(cm)
 		if err != nil {
@@ -29,18 +31,23 @@ func (c *WorkloadsController) addConfigMap(obj interface{}) {
 
 	}
 }
+
+// updateConfigMap notifies informer that a config map is updated
+// checks if the configMap updated is for the controller settings
+// updates settings if found
 func (c *WorkloadsController) updateConfigMap(old, new interface{}) {
 	// Cast the obj as ConfigMap
 	cmNew := new.(*corev1.ConfigMap)
-	if cmNew.Name == "node-harvester-cm" {
+	if cmNew.Name == "node-refiner-cm" {
 		zap.S().Info("ConfigMap update event, initiating an update to the drainer settings")
 		err := c.d.UpdateSettings(cmNew)
 		if err != nil {
 			zap.S().Warnw("Couldn't update the drainer settings using ConfigMap", "error", err)
 		}
 	}
-
 }
+
+// deleteConfigMap notifies informer that a config map is deleted
 func (c *WorkloadsController) deleteConfigMap(obj interface{}) {
 	// Cast the obj as Node
 	cm := obj.(*corev1.ConfigMap)

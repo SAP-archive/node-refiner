@@ -192,20 +192,3 @@ func logCluster(clusterManifest *types.ClusterManifest) {
 		"RAM Utilization", common.FormatPercentage(clusterManifest.Utilization.PercentageRAM),
 	)
 }
-
-// listImages returns a list of container images running in the provided namespace
-func listImages(client kubernetes.Interface, namespace string) ([]string, error) {
-	pl, err := client.CoreV1().Pods(namespace).List(context.TODO(), metav1.ListOptions{})
-	if err != nil {
-		return nil, err
-	}
-
-	var images []string
-	for _, p := range pl.Items {
-		for _, c := range p.Spec.Containers {
-			images = append(images, c.Image)
-		}
-	}
-
-	return images, nil
-}
