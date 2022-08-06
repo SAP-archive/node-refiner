@@ -57,7 +57,7 @@ func NewController() (*WorkloadsController, error) {
 		}
 	}
 
-	s := supervisor.InitSupervisor("node_harvester")
+	s := supervisor.InitSupervisor("node_refiner")
 	d := drainer.NewAPICordonDrainer(kubeClient, s)
 
 	go s.StartSupervising()
@@ -127,7 +127,7 @@ func (c *WorkloadsController) CreateRunInformers() {
 	c.AddConfigMapEventHandler()
 
 	<-stopCh
-	zap.S().Info("Stopping Node Harvester")
+	zap.S().Info("Stopping Node Refiner")
 }
 
 func (c *WorkloadsController) calculateTotalPodsMetrics() {
