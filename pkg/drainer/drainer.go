@@ -24,7 +24,7 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-// Default pod eviction settings.
+// Default drainer settings.
 const (
 	DefaultMaxGracePeriod   = 8 * time.Minute
 	DefaultEvictionOverhead = 30 * time.Second
@@ -38,7 +38,7 @@ const (
 	DefaultEnabled                = true
 )
 
-// Cordoner cordons nodes.
+// Cordoner cordons/uncordons nodes.
 type Cordoner interface {
 	// Cordon the supplied node. Marks it unschedulable for new pods.
 	Cordon(nodeName string) error
@@ -53,7 +53,7 @@ type Drainer interface {
 	Drain(nodeName string) error
 }
 
-// CordonDrainer both cordons and drains nodes!
+// CordonDrainer both cordons/uncordons and drains nodes
 type CordonDrainer interface {
 	Cordoner
 	Drainer
@@ -278,6 +278,7 @@ func (d *APICordonDrainer) Drain(nodeName string) error {
 	return nil
 }
 
+// evict a pod from a node while respecting the pod's tolerations and grace period
 func (d *APICordonDrainer) evict(p *v1.Pod, abort <-chan struct{}, e chan<- error) {
 	gracePeriod := int64(d.maxGracePeriod.Seconds())
 	zap.S().Infow("Evicting Pod", "pod", p.Name, "namespace", p.Namespace)
@@ -315,6 +316,7 @@ func (d *APICordonDrainer) evict(p *v1.Pod, abort <-chan struct{}, e chan<- erro
 	}
 }
 
+// awaitDeletion handles grace period for Pod Deletion before sending a signal that it timed out
 func (d *APICordonDrainer) awaitDeletion(p *v1.Pod, timeout time.Duration) error {
 	return wait.PollImmediate(1*time.Second, timeout, func() (bool, error) {
 		got, err := d.c.CoreV1().Pods(p.GetNamespace()).Get(d.getContext(), p.GetName(), metav1.GetOptions{})
