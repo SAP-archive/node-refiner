@@ -102,7 +102,7 @@ spec:
       - env:
         - name: LISTENING_PORT
           value: "8080"
-        image: eu.gcr.io/sap-ml-mlf-dev/com.sap.aicore/node-refiner:0.1.2
+        image: ghcr.io/sap/node-refiner:latest
         imagePullPolicy: Always
         name: node-refiner
         resources:
@@ -112,8 +112,6 @@ spec:
           requests:
             cpu: 50m
             memory: 256Mi
-      imagePullSecrets:
-      - name: docker-registry
       serviceAccountName: node-refiner-sa
 ```
 
