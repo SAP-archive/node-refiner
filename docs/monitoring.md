@@ -1,6 +1,6 @@
-# Monitoring Node Harvester
+# Monitoring Node Refiner
 
-Here we write more about the steps involved to monitor the behavior of the node harvester operator. Similar to the
+Here we write more about the steps involved to monitor the behavior of the node refiner controller. Similar to the
 testing document, this will provide steps to create an environment where you can see what kind of actions the controller
 is taking and the generic state of the cluster.
 
@@ -34,13 +34,13 @@ Now, we need to configure prometheus in order to scrape the custom metrics we ar
 Get the config map that sets up the data sources
 
 ```shell
-kubectl -n node-harvester-ns get cm  loki-stack-prometheus-server -o jsonpath="{ .data.prometheus\\.yml }" > prom.yaml
+kubectl -n node-refiner-ns get cm  loki-stack-prometheus-server -o jsonpath="{ .data.prometheus\\.yml }" > prom.yaml
 ```
 
 Append the following jobs
 
 ```shell
-- job_name: node-harvester
+- job_name: node-refiner
   scrape_interval: 10s
   kubernetes_sd_configs:
     - role: pod
@@ -58,14 +58,14 @@ Append the following jobs
       target_label: __address__
     - source_labels: [__meta_kubernetes_pod_label_app]
       action: keep
-      regex: node-harvester
+      regex: node-refiner
 ```
 
 Apply changes by deleting the old configmap and adding the locally edited one
 
 ```shell
-kubectl -n node-harvester-ns delete cm loki-stack-prometheus-server
-kubectl -n node-harvester-ns create cm loki-stack-prometheus-server --from-file=prometheus.yml=prom.yaml
+kubectl -n node-refiner-ns delete cm loki-stack-prometheus-server
+kubectl -n node-refiner-ns create cm loki-stack-prometheus-server --from-file=prometheus.yml=prom.yaml
 rm prometheus.yaml
 ```
 
