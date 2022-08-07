@@ -1,6 +1,6 @@
-# Testing Node Harvester
+# Testing Node Refiner
  
- Node Refiner Operator interacts with many parts of the Kubernetes infrastructure, which makes it a particular case for testing. As a result, we currently use a mixture of manual and automated tests to ensure that the operator's behavior is as intended.
+ Node Refiner Controller interacts with many parts of the Kubernetes infrastructure, which makes it a particular case for testing. As a result, we currently use a mixture of manual and automated tests to ensure that the operator's behavior is as intended.
 
 ## Automated Testing
 ### KUTTL
@@ -17,7 +17,7 @@ It is also possible to have KUTTL automate the setup of a cluster.
 ```shell
 kubectl kuttl test
 ```
-It's as simple as this, by running this command in the operator's directory, all the tests will be run against the cluster in your environment. This will include spinning a test namespace to test all your configurations and deleting it at the end of the test process.
+It's as simple as this, by changing the value `${IMAGE_TAGGED}` (used for ci purposes) in the yaml test files to the image that you would like to test, running this command in the operator's directory, all the tests will be run against the cluster in your environment. This will include spinning a test namespace to test all your configurations and deleting it at the end of the test process.
 
 ```shell
 kubectl kuttl test --start-control-plane
