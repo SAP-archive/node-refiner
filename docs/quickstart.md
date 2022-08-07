@@ -5,3 +5,9 @@ Installing node-refiner is a straight forward process, you can use pre-prepared 
 ```shell
 kubectl apply -k manifests/base
 ```
+
+You can specify the image in the [kustomization](../manifests/base/kustomization.yaml) file.
+
+```yaml:../manifests/base/kustomization.yaml [26-29]
+
+```
