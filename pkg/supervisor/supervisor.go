@@ -1,3 +1,5 @@
+// Initializes supervision over cluster and controller metrics
+// uses prometheus gauges and counters
 package supervisor
 
 import (
@@ -42,6 +44,8 @@ func (s *Supervisor) startLiveness() {
 	Check(http.ListenAndServe(fmt.Sprintf(":%s", livenessPort), nil))
 }
 
+// Start a Prometheus endpoint to listen to the metrics
+// node refiner is populating
 func (s *Supervisor) startPrometheus() {
 	// Setup Prometheus Metrics
 

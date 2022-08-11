@@ -1,24 +1,24 @@
-# Monitoring Node Harvester
+# Monitoring Node Refiner
 
-Here we write more about the steps involved to monitor the behavior of the node harvester operator. Similar to the
+Node refiner also exposes custom metrics in case the user wants to track these metrics using Loki or Grafana, here we write more about the steps involved to monitor these metrics. Similar to the
 testing document, this will provide steps to create an environment where you can see what kind of actions the controller
 is taking and the generic state of the cluster.
 
-We do this by utilizing the stack that includes Loki, Grafana, and Prometheus.
+We do this by utilizing Loki, Grafana, and Prometheus.
 
-## Installing Stack
+## Installing Monitoring Stack
 
 We need to initially deploy this stack, the easiest way is to use the corresponding helm chart.
 
 ```shell
-helm upgrade --install loki grafana/loki-stack --namespace=<YOUR-NAMESPACE>  --set grafana.enabled=true,prometheus.enabled=true,prometheus.alertmanager.persistentVolume.enabled=false,prometheus.server.persistentVolume.enabled=false
+helm upgrade --install loki-stack grafana/loki-stack --namespace=<YOUR-NAMESPACE>  --set grafana.enabled=true,prometheus.enabled=true,prometheus.alertmanager.persistentVolume.enabled=false,prometheus.server.persistentVolume.enabled=false
 ```
 
 By the time this is done you'll have the three tools installed, we then need to log in to our Grafana instance. We first
 identify the password that we will use for logging in.
 
 ```shell
-kubectl get secret --namespace <YOUR-NAMESPACE> loki-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+kubectl get secret --namespace <YOUR-NAMESPACE> loki-stack-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 ```
 
 Then we initiate a port-forwarding operation to be able to access it from our local browser
@@ -34,13 +34,13 @@ Now, we need to configure prometheus in order to scrape the custom metrics we ar
 Get the config map that sets up the data sources
 
 ```shell
-kubectl -n node-harvester-ns get cm  loki-stack-prometheus-server -o jsonpath="{ .data.prometheus\\.yml }" > prom.yaml
+kubectl -n node-refiner get cm  loki-stack-prometheus-server -o jsonpath="{ .data.prometheus\\.yml }" > prom.yaml
 ```
 
 Append the following jobs
 
 ```shell
-- job_name: node-harvester
+- job_name: node-refiner
   scrape_interval: 10s
   kubernetes_sd_configs:
     - role: pod
@@ -58,16 +58,20 @@ Append the following jobs
       target_label: __address__
     - source_labels: [__meta_kubernetes_pod_label_app]
       action: keep
-      regex: node-harvester
+      regex: node-refiner
 ```
 
 Apply changes by deleting the old configmap and adding the locally edited one
 
 ```shell
-kubectl -n node-harvester-ns delete cm loki-stack-prometheus-server
-kubectl -n node-harvester-ns create cm loki-stack-prometheus-server --from-file=prometheus.yml=prom.yaml
-rm prometheus.yaml
+kubectl -n node-refiner delete cm loki-stack-prometheus-server
+kubectl -n node-refiner create cm loki-stack-prometheus-server --from-file=prometheus.yml=prom.yaml
+rm prom.yaml
 ```
+
+Part of the resulting dashboard should look like this
+
+![Dashboard](img/dashboard-sample.png)
 
 ## Additional Commands\
 

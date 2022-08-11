@@ -1,3 +1,5 @@
+// package common provides all the common functions used by the controller
+// by handling cluster configuration, and formatting the output
 package common
 
 import (

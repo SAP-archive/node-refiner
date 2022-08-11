@@ -6,6 +6,8 @@ import (
 	"k8s.io/apimachinery/pkg/api/resource"
 )
 
+// Weight for calculating utilization scores
+// design decision is to make CPU usage weigh more in score calculation
 const (
 	cpuWeight = 0.8
 	ramWeight = 0.2

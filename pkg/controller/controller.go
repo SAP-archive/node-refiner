@@ -57,7 +57,7 @@ func NewController() (*WorkloadsController, error) {
 		}
 	}
 
-	s := supervisor.InitSupervisor("node_harvester")
+	s := supervisor.InitSupervisor("node_refiner")
 	d := drainer.NewAPICordonDrainer(kubeClient, s)
 
 	go s.StartSupervising()
@@ -127,7 +127,7 @@ func (c *WorkloadsController) CreateRunInformers() {
 	c.AddConfigMapEventHandler()
 
 	<-stopCh
-	zap.S().Info("Stopping Node Harvester")
+	zap.S().Info("Stopping Node Refiner")
 }
 
 func (c *WorkloadsController) calculateTotalPodsMetrics() {
@@ -191,21 +191,4 @@ func logCluster(clusterManifest *types.ClusterManifest) {
 		"CPU Utilization", common.FormatPercentage(clusterManifest.Utilization.PercentageCPU),
 		"RAM Utilization", common.FormatPercentage(clusterManifest.Utilization.PercentageRAM),
 	)
-}
-
-// listImages returns a list of container images running in the provided namespace
-func listImages(client kubernetes.Interface, namespace string) ([]string, error) {
-	pl, err := client.CoreV1().Pods(namespace).List(context.TODO(), metav1.ListOptions{})
-	if err != nil {
-		return nil, err
-	}
-
-	var images []string
-	for _, p := range pl.Items {
-		for _, c := range p.Spec.Containers {
-			images = append(images, c.Image)
-		}
-	}
-
-	return images, nil
 }

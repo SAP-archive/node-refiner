@@ -21,6 +21,7 @@ func (c *WorkloadsController) AddNodeEventHandler() {
 		})
 }
 
+// addNode notifies informer that a node is added to the cluster
 func (c *WorkloadsController) addNode(obj interface{}) {
 	node := obj.(*corev1.Node)
 	c.nodesMap[node.Name] = types.NodeManifest{
@@ -35,6 +36,8 @@ func (c *WorkloadsController) addNode(obj interface{}) {
 		c.d.LastNodeAddition = nodeTime
 	}
 }
+
+// updateNode notifies informer that a node is updated in the cluster
 func (c *WorkloadsController) updateNode(old, new interface{}) {
 	// Cast the obj as Node
 	oldNode := old.(*corev1.Node)
@@ -51,6 +54,8 @@ func (c *WorkloadsController) updateNode(old, new interface{}) {
 		zap.S().Infof("Update took place for node %v, now node %v", oldNode.Name, newNode.Name)
 	}
 }
+
+// deleteNode notifies informer that a node is deleted in the cluster
 func (c *WorkloadsController) deleteNode(obj interface{}) {
 	// Cast the obj as Node
 	node := obj.(*corev1.Node)
@@ -118,7 +123,6 @@ func (c *WorkloadsController) getNodeToDrain() (*types.NodeManifest, error) {
 			}
 		}
 	}
-
 	return nmMin, nil
 }
 

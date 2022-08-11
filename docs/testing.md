@@ -1,6 +1,6 @@
-# Testing Node Harvester
+# Testing Node Refiner
  
- Node Harvester Operator interacts with many parts of the Kubernetes infrastructure, which makes it a particular case for testing. As a result, we currently use a mixture of manual and automated tests to ensure that the operator's behavior is as intended.
+ Node Refiner Controller interacts with many parts of the Kubernetes infrastructure, which makes it a particular case for testing. As a result, we currently use a mixture of manual and automated tests to ensure that the operator's behavior is as intended.
 
 ## Automated Testing
 ### KUTTL
@@ -17,7 +17,7 @@ It is also possible to have KUTTL automate the setup of a cluster.
 ```shell
 kubectl kuttl test
 ```
-It's as simple as this, by running this command in the operator's directory, all the tests will be run against the cluster in your environment. This will include spinning a test namespace to test all your configurations and deleting it at the end of the test process.
+It's as simple as this, by changing the value `${IMAGE_TAGGED}` (used for ci purposes) in the yaml test files to the image that you would like to test, running this command in the operator's directory, all the tests will be run against the cluster in your environment. This will include spinning a test namespace to test all your configurations and deleting it at the end of the test process.
 
 ```shell
 kubectl kuttl test --start-control-plane
@@ -38,13 +38,13 @@ apiVersion: v1
 kind: Namespace
 metadata:
   labels:
-    app: node-harvester
-  name: node-harvester
+    app: node-refiner
+  name: node-refiner
 ```
 ```shell
 kubectl apply -f namespace.yaml
 
-kubectl config set-context --current --namespace=node-harvester
+kubectl config set-context --current --namespace=node-refiner
 ```
 3. Create a K8s Service Account, to give this namespace the necessary rights.
 ```yaml
@@ -52,9 +52,9 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   labels:
-    app: node-harvester
-  name: node-harvester-sa
-  namespace: node-harvester
+    app: node-refiner
+  name: node-refiner-sa
+  namespace: node-refiner
 
 ```
 4. Create a K8s ClusterRoleBinding, to give this service account cluster-admin rights.
@@ -64,7 +64,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   labels:
-    app: node-harvester
+    app: node-refiner
   name: controller-admin
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -72,8 +72,8 @@ roleRef:
   name: cluster-admin
 subjects:
 - kind: ServiceAccount
-  name: node-harvester-sa
-  namespace: node-harvester
+  name: node-refiner-sa
+  namespace: node-refiner
 
 ```
 
@@ -85,26 +85,26 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: node-harvester
-  name: node-harvester
-  namespace: node-harvester
+    app: node-refiner
+  name: node-refiner
+  namespace: node-refiner
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: node-harvester
+      app: node-refiner
   template:
     metadata:
       labels:
-        app: node-harvester
+        app: node-refiner
     spec:
       containers:
       - env:
         - name: LISTENING_PORT
           value: "8080"
-        image: eu.gcr.io/sap-ml-mlf-dev/com.sap.aicore/node-harvester:0.1.2
+        image: ghcr.io/sap/node-refiner:latest
         imagePullPolicy: Always
-        name: node-harvester
+        name: node-refiner
         resources:
           limits:
             cpu: 200m
@@ -112,15 +112,13 @@ spec:
           requests:
             cpu: 50m
             memory: 256Mi
-      imagePullSecrets:
-      - name: docker-registry
-      serviceAccountName: node-harvester-sa
+      serviceAccountName: node-refiner-sa
 ```
 
 ### Stress Test
 The idea here is to test how the `CA` and this operator coordinate their tasks together. We will do this by simulating a heavy workload load to be scheduled in the cluster, thus requiring the `CA` to act upon the excess needed resources.
 
-When the `CA` spins up new resources, the `NH` will be notified and will ensure that there is no action on its part to be performed for a pre-set Grace Period; this allows the cluster to stabilize its resources consumption before evaluating the cluster utilization and taking any action.
+When the `CA` spins up new resources, the `NR` will be notified and will ensure that there is no action on its part to be performed for a pre-set Grace Period; this allows the cluster to stabilize its resources consumption before evaluating the cluster utilization and taking any action.
 
 We can then delete this workload, leaving the cluster with an unneeded number of resources dangling. Ideally, the operator should act upon this and drain some of the nodes depending on the utilization metrics calculated. The`CA` would find that these nodes are highly under-utilized and will delete them in the following step.
 1. First, ensure that you have the testing namespace active. If you haven't done yet, you'll find the steps written above.

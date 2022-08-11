@@ -92,7 +92,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(increase(node_harvester_nodes_cordoned[30d]))",
+          "expr": "sum(increase(node_refiner_nodes_cordoned[30d]))",
           "interval": "",
           "legendFormat": "Nodes Cordoned",
           "queryType": "randomWalk",
@@ -100,7 +100,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(increase(node_harvester_nodes_drained[30d]))",
+          "expr": "sum(increase(node_refiner_nodes_drained[30d]))",
           "hide": false,
           "interval": "",
           "legendFormat": "Nodes Drained",
@@ -108,7 +108,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(increase(node_harvester_nodes_uncordoned[30d]))",
+          "expr": "sum(increase(node_refiner_nodes_uncordoned[30d]))",
           "hide": false,
           "interval": "",
           "legendFormat": "Nodes Uncordoned",
@@ -207,7 +207,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(node_harvester_cluster_unschedulable_nodes)",
+          "expr": "sum(node_refiner_cluster_unschedulable_nodes)",
           "interval": "",
           "legendFormat": "Unschedulable Nodes",
           "queryType": "randomWalk",
@@ -350,7 +350,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(node_harvester_cluster_cpu_utilization)",
+          "expr": "sum(node_refiner_cluster_cpu_utilization)",
           "interval": "",
           "legendFormat": "",
           "queryType": "randomWalk",
@@ -414,7 +414,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(node_harvester_cluster_memory_utilization)",
+          "expr": "sum(node_refiner_cluster_memory_utilization)",
           "interval": "",
           "legendFormat": "",
           "queryType": "randomWalk",
@@ -476,7 +476,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(node_harvester_cluster_cpu_utilization)",
+          "expr": "sum(node_refiner_cluster_cpu_utilization)",
           "interval": "",
           "legendFormat": "CPU",
           "queryType": "randomWalk",
@@ -484,7 +484,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(node_harvester_cluster_memory_utilization)",
+          "expr": "sum(node_refiner_cluster_memory_utilization)",
           "hide": false,
           "interval": "",
           "legendFormat": "Memory",
@@ -587,7 +587,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(node_harvester_cluster_nodes)",
+          "expr": "sum(node_refiner_cluster_nodes)",
           "interval": "",
           "legendFormat": "",
           "queryType": "randomWalk",
@@ -654,7 +654,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(node_harvester_cluster_non_tainted_nodes)",
+          "expr": "sum(node_refiner_cluster_non_tainted_nodes)",
           "interval": "",
           "legendFormat": "",
           "queryType": "randomWalk",
@@ -721,7 +721,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(node_harvester_cluster_nodes - node_harvester_cluster_non_tainted_nodes)",
+          "expr": "sum(node_refiner_cluster_nodes - node_refiner_cluster_non_tainted_nodes)",
           "interval": "",
           "legendFormat": "",
           "queryType": "randomWalk",
@@ -788,7 +788,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(node_harvester_cluster_pods)",
+          "expr": "sum(node_refiner_cluster_pods)",
           "interval": "",
           "legendFormat": "",
           "queryType": "randomWalk",
@@ -854,7 +854,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(node_harvester_cluster_excess_nodes)",
+          "expr": "sum(node_refiner_cluster_excess_nodes)",
           "interval": "",
           "legendFormat": "",
           "queryType": "randomWalk",
@@ -916,7 +916,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(node_harvester_cluster_nodes)",
+          "expr": "sum(node_refiner_cluster_nodes)",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -926,7 +926,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(node_harvester_cluster_non_tainted_nodes)",
+          "expr": "sum(node_refiner_cluster_non_tainted_nodes)",
           "hide": false,
           "interval": "",
           "legendFormat": "Non Tainted Nodes",
@@ -934,7 +934,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(node_harvester_cluster_nodes) - sum(node_harvester_cluster_non_tainted_nodes)",
+          "expr": "sum(node_refiner_cluster_nodes) - sum(node_refiner_cluster_non_tainted_nodes)",
           "hide": false,
           "interval": "",
           "legendFormat": "Tainted Nodes",
@@ -1052,7 +1052,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(node_harvester_cluster_excess_nodes)",
+          "expr": "sum(node_refiner_cluster_excess_nodes)",
           "format": "time_series",
           "interval": "",
           "legendFormat": "",
@@ -1113,7 +1113,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(delta(node_harvester_cluster_nodes[$__rate_interval]))",
+          "expr": "sum(delta(node_refiner_cluster_nodes[$__rate_interval]))",
           "interval": "",
           "legendFormat": "Change in Total Nodes",
           "queryType": "randomWalk",
@@ -1121,7 +1121,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(delta(node_harvester_cluster_non_tainted_nodes[$__rate_interval]))",
+          "expr": "sum(delta(node_refiner_cluster_non_tainted_nodes[$__rate_interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "Change in Non Tainted Nodes",
@@ -1216,7 +1216,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(node_harvester_cluster_pods)",
+          "expr": "sum(node_refiner_cluster_pods)",
           "interval": "",
           "legendFormat": "",
           "queryType": "randomWalk",
@@ -1303,7 +1303,7 @@
       "pluginVersion": "7.5.0",
       "targets": [
         {
-          "expr": "{app=\"node-harvester\"}",
+          "expr": "{app=\"node-refiner\"}",
           "queryType": "randomWalk",
           "refId": "A"
         }
@@ -1325,7 +1325,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Node Harvester Dashboard",
+  "title": "Node Refiner Dashboard",
   "uid": "E8osWdgnz",
   "version": 2
 }
